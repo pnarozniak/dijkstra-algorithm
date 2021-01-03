@@ -1,0 +1,168 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dijkstra</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <script src="script.js" defer></script>
+    <script src="dijkstra.js" defer></script>
+  </head>
+  <body>
+    <nav class="nav flex-container">
+      <input
+        type="button"
+        id="add-button"
+        onclick="addHost()"
+        class="button"
+        value="Dodaj hosta"
+      />
+      <input
+        type="button"
+        class="button"
+        value="Edytuj węzły"
+        id="edit-nodes"
+        onclick="editNodes()"
+      />
+      <input
+        type="button"
+        class="button"
+        value="Rozwiąż"
+        id="resolve"
+        onclick="showResultContainer()"
+      />
+    </nav>
+    <main class="main flex-container" id="board">
+      <span
+        id="circle-template"
+        style="display: none"
+        class="flex-container"
+      ></span>
+    </main>
+    <footer></footer>
+
+    <div
+      id="floating-container"
+      class="floating-container flex-container"
+      style="display: none"
+    >
+      <button id="close-button" onclick="hideFloatingContainer()">X</button>
+      <form
+        onsubmit="hostSubmit(); return false"
+        class="flex-container"
+        style="
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <input
+          type="text"
+          autocomplete="off"
+          required
+          placeholder="Nazwa hosta"
+          id="host-name"
+        />
+        <input type="submit" class="button" value="+" />
+      </form>
+    </div>
+
+    <div
+      id="floating-container-line-value"
+      class="floating-container flex-container"
+      style="display: none"
+    >
+      <button id="close-button" onclick="hideFloatingContainer()">X</button>
+      <form
+        onsubmit="lineValueSubmit(); return false"
+        class="flex-container"
+        style="
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <input
+          type="text"
+          autocomplete="off"
+          required
+          placeholder="Odleglosc"
+          pattern="[0-9]+"
+          id="line-value"
+        />
+        <input type="submit" class="button" value="+" />
+        <input
+          type="button"
+          class="button delete"
+          value="USUN"
+          onclick="deleteLine()"
+        />
+      </form>
+    </div>
+
+    <div
+      id="floating-container-result"
+      class="floating-container flex-container"
+      style="display: none"
+    >
+      <button id="close-button" onclick="hideResultContainer()">X</button>
+      <form
+        id="result-form"
+        onsubmit="resolve(); return false;"
+        class="flex-container"
+        style="
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <div class="result-form-div">
+          <label for="start-host" class="result-form-label"
+            >Host startowy</label
+          >
+          <select id="start-host" required class="result-form-select"></select>
+        </div>
+
+        <div class="result-form-div">
+          <label for="sort-toAnalyze" class="result-form-label"
+            >Jezeli przy wyborze wezla do analizy mozemy wybrac kilka wezlow<br />to
+            sortujemy te wezly leksykograficznie w kolejnosci:</label
+          >
+          <select id="sort-toAnalyze" required class="result-form-select">
+            <option>A->Z</option>
+            <option>Z->A</option>
+          </select>
+        </div>
+
+        <div class="result-form-div">
+          <label for="new-path" class="result-form-label"
+            >Jezeli nowo znaleziona sciezka ma taki sam koszt jak juz
+            znaleziona<br />to wybieramy:</label
+          >
+          <select
+            id="new-path"
+            required
+            class="result-form-select"
+            style="width: 150px"
+          >
+            <option>ISTNIEJACA</option>
+            <option>NOWA</option>
+          </select>
+        </div>
+
+        <input
+          type="submit"
+          value="Rozwiąż"
+          class="button result-form-submit"
+        />
+      </form>
+
+      <div style="flex-direction: column; display: flex">
+        <table id="result-table" style="display: none"></table>
+
+        <table
+          id="path-result-table"
+          style="display: none; margin-top: 2rem"
+        ></table>
+      </div>
+    </div>
+  </body>
+</html>
